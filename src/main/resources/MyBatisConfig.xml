@@ -4,19 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="lt.vu.mybatis.model.Team" alias="Team"/>
-        <typeAlias type="lt.vu.mybatis.model.Player" alias="Player"/>
+        <typeAlias type="lt.vu.mybatis.model.Kid" alias="Kid"/>
+        <typeAlias type="lt.vu.mybatis.model.KidsGroup" alias="KidsGroup"/>
+        <typeAlias type="lt.vu.mybatis.model.Leader" alias="Leader"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="MANAGED"/>
             <dataSource type="JNDI">
-                <property name="data_source" value="PlayersDataSource"/>
+                <property name="data_source" value="GroupsDataSource"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mybatis.xml/TeamMapper.xml"/>
-        <mapper resource="mybatis.xml/PlayerMapper.xml"/>
+        <mapper resource="mybatis.xml/KidMapper.xml"/>
+        <mapper resource="mybatis.xml/KidsGroupMapper.xml"/>
+        <mapper resource="mybatis.xml/KidsGroupLeaderMapper.xml"/>
+        <mapper resource="mybatis.xml/LeaderMapper.xml"/>
     </mappers>
 </configuration>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    Name: #{leaderInfoMybatis.leader.name}<br/>
+    Email: #{leaderInfoMybatis.leader.email}<br/>
+
+    <h2>Groups for this leader:</h2>
+    <ol>
+        <ui:repeat value="#{leaderInfoMybatis.leader.groupList}" var="group">
+            <li>
+                <h:link value="#{group.name}" outcome="groupInfo?groupId=#{group.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+    <br/>
+    <h4>Add new group:</h4>
+    <h:form>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>
+                    <h:inputText id="name" value="#{leaderInfoMybatis.groupToCreate.name}" required="true"/>
+                    <h:message for="name" style="color: blue"/>
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                    <h:inputText id="city" value="#{leaderInfoMybatis.groupToCreate.city}" required="true"/>
+                    <h:message for="city" style="color: blue"/>
+                </td>
+            </tr>
+
+        </table>
+        <p>
+            <h:commandButton value="Add" action="#{leaderInfoMybatis.createGroup}">
+                <f:param name="leaderId" value="#{leaderInfoMybatis.leader.id}" />
+            </h:commandButton>
+        </p>
+    </h:form>
+    <br/>
+
+    <h:link outcome="frontpage" value="Back"/>
+</h:body>
+</html>

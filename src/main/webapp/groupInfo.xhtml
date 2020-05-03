@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    Group name: #{groupInfo.group.name}<br/>
+    Group city: #{groupInfo.group.city}<br/><br/>
+
+    <h2>Kids in group:</h2>
+    <ol>
+        <ui:repeat value="#{groupInfo.group.kids}" var="kid">
+            <li>
+                <h:link value="#{kid.firstName}" outcome="kidInfo?kidId=#{kid.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+    <br/>
+    <h2>Group leaders</h2>
+    <ol>
+        <ui:repeat value="#{groupInfo.group.leaderList}" var="leader">
+            <li>
+                <h:link value="#{leader.name}" outcome="leaderInfo?leaderId=#{leader.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+    <br/>
+
+    <h4>Add new kid to the group:</h4>
+    <h:form>
+        <h:inputText a:placeholder="firstname" value="#{groupInfo.kidToCreate.firstName}" text="First name" required="true" /><br/>
+        <h:inputText a:placeholder="lastname" value="#{groupInfo.kidToCreate.lastName}" text="Last name" required="true" />
+        <br/>
+        <h:commandButton value="Add new kid for group" action="#{groupInfo.createKid}" >
+            <f:param name="groupId" value="#{groupInfo.group.id}" />
+        </h:commandButton>
+    </h:form>
+    <br/>
+
+    <h4>Add new leader:</h4>
+    <h:form>
+        <table>
+            <tr>
+                <td>Email:</td>
+                <td>
+                    <h:inputText id="email" value="#{groupInfo.leaderToCreate.email}" required="true"/>
+                    <h:message for="email" style="color: blue"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td>
+                    <h:inputText id="name" value="#{groupInfo.leaderToCreate.name}" required="true"/>
+                    <h:message for="name" style="color: blue"/>
+                </td>
+            </tr>
+
+        </table>
+        <p>
+            <h:commandButton value="Add" action="#{groupInfo.createLeader}">
+                <f:param name="groupId" value="#{groupInfo.group.id}" />
+            </h:commandButton>
+        </p>
+    </h:form>
+    <br/>
+    <h:link outcome="index" value="Back"/>
+</h:body>
+</html>
