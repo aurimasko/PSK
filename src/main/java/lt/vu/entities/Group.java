@@ -28,6 +28,10 @@ public class Group implements Serializable {
     @Size(max = 100)
     private String city;
 
+    @Version
+    @Column(name = "OPT_LOCK_VERSION")
+    private Integer version;
+
     @OneToMany(mappedBy = "group")
     private List<Kid> kids = new ArrayList<>();
 

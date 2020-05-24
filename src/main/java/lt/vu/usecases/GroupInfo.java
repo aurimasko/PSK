@@ -13,7 +13,10 @@ import lt.vu.persistence.LeadersDAO;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ import java.util.Map;
 
 import lt.vu.interceptors.LoggedInvocation;
 
-@Model
+@ViewScoped
+@Named
 public class GroupInfo implements Serializable {
 
     @Inject
@@ -75,5 +79,17 @@ public class GroupInfo implements Serializable {
 
         leadersDAO.persist(leaderToCreate);
         return "groupInfo?faces-redirect=true&groupId=" + this.group.getId();
+    }
+
+
+    @Transactional
+    @LoggedInvocation
+    public String updateGroupInfo() {
+        try{
+            groupsDAO.update(this.group);
+        } catch (OptimisticLockException e) {
+            return "/groupInfo.xhtml?faces-redirect=true&groupId=" + this.group.getId() + "&error=optimistic-lock-exception";
+        }
+        return "groupInfo.xhtml?groupId=" + this.group.getId() + "&faces-redirect=true";
     }
 }
